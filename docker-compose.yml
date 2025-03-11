@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  openmanus:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: openmanus
+    volumes:
+      # Mount your local config file to override the example config
+      - ./config/config.toml:/app/config/config.toml:ro
+      # Mount workspace directory for persistence
+      - ./workspace:/app/workspace
+    ports:
+      - "8000:8000"  # Adjust if needed
+    environment:
+      - PYTHONUNBUFFERED=1
+    # If you need to override the default command
+    # command: python run_flow.py
+    restart: unless-stopped
